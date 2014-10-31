@@ -1,0 +1,185 @@
+#!/usr/bin/python
+# -*- coding: utf-8 -*-
+
+# 
+#
+# Author: Cao Yang
+# mail: 1054490383@qq.com
+# Created Time: Mon 05 Mar 2012 03:50:50 PM CST
+
+import os
+import copy
+import cairo
+import gtk
+import sys
+import rpy2.robjects as ro
+import rpy2.rinterface as ri
+from rpy2.robjects.packages import importr
+
+class App(gtk.Window):
+
+	count = 0
+	
+	def __init__(self):
+		super(App, self).__init__()
+		
+		App.count = App.count + 1 
+		self.d3 = 0
+		self.d2d = 0
+		self.d2y = 0
+		self.d3_L = []
+		self.d2d_L = []
+		self.d2y_L = []
+		self.flag =0
+		self.filen = str(os.path.abspath(__file__))[:len(str(os.path.abspath(__file__)))-6]
+		#self.ff = [(781, 588)]
+		self.set_position(gtk.WIN_POS_CENTER)
+		self.set_title("FuncPlot"+str(App.count))
+		#self.modify_bg(gtk.gdk.Color(65535, 65535, 65535))
+		#self.ww = 781
+		#self.hh = 588
+		self.resize(781, 588)
+		#self.connect("size-allocate", self.on_size)
+		
+		#菜单栏
+		mb = gtk.MenuBar()
+		filemenu = gtk.Menu()
+		filem = gtk.MenuItem("文件(_F)", use_underline = True)
+		filem.set_submenu(filemenu)
+		mb.append(filem)
+		
+		agr = gtk.AccelGroup()
+		self.add_accel_group(agr)
+		
+		#新建
+		newi = gtk.ImageMenuItem(gtk.STOCK_NEW, agr)
+		key, mod = gtk.accelerator_parse("<Control>N")
+		newi.add_accelerator("activate", agr, key,
+				mod, gtk.ACCEL_VISIBLE)
+		filemenu.append(newi)
+		newi.connect("activate", self.on_new)
+		
+		##打开
+		#openi = gtk.ImageMenuItem(gtk.STOCK_OPEN, agr)
+		#key, mod = gtk.accelerator_parse("<Control>O")
+		#openi.add_accelerator("activate", agr, key, 
+		#		mod, gtk.ACCEL_VISIBLE)
+		#filemenu.append(openi)
+		#openi.connect("activate", self.on_open)
+		
+		#保存
+		savei = gtk.ImageMenuItem(gtk.STOCK_SAVE, agr)
+		key, mod = gtk.accelerator_parse("<Control>S")
+		savei.add_accelerator("activate", agr, key, 
+				mod, gtk.ACCEL_VISIBLE)
+		filemenu.append(savei)
+		savei.connect("activate", self.on_save)
+		#分隔符
+		sep = gtk.SeparatorMenuItem()
+		filemenu.append(sep)
+		
+		#退出
+		exiti = gtk.ImageMenuItem(gtk.STOCK_QUIT, agr)
+		key, mod = gtk.accelerator_parse("<Control>E")
+		exiti.add_accelerator("activate", agr, key, 
+				mod, gtk.ACCEL_VISIBLE)
+		exiti.connect("activate", self.windestroy1)
+		filemenu.append(exiti)
+		
+		#fileexit = gtk.MenuItem("退出")
+		#fileexit.connect("activate", gtk.main_quit)
+		#filemenu.append(fileexit)
+
+		#作图
+		graphmenu = gtk.Menu()
+		graphm = gtk.MenuItem("作图(_D)", use_underline = True)
+		graphm.set_submenu(graphmenu)
+		mb.append(graphm)
+		
+		d2menu = gtk.Menu()
+		graph2d = gtk.MenuItem("2D作图")
+		graph3d = gtk.MenuItem("3D作图")
+
+		dx = gtk.MenuItem("显函数作图")
+		key, mod = gtk.accelerator_parse("<Control>1")
+		dx.add_accelerator("activate", agr, key, 
+				mod, gtk.ACCEL_VISIBLE)
+		dy = gtk.MenuItem("隐函数作图")
+		key, mod = gtk.accelerator_parse("<Control>2")
+		dy.add_accelerator("activate", agr, key, 
+				mod, gtk.ACCEL_VISIBLE)
+		key, mod = gtk.accelerator_parse("<Control>3")
+		graph3d.add_accelerator("activate", agr, key, 
+				mod, gtk.ACCEL_VISIBLE)
+
+		graph2d.set_submenu(d2menu)
+		d2menu.append(dx)
+		d2menu.append(dy)
+
+		dx.connect("activate", self.on_2d)
+		dy.connect("activate", self.on_2y)
+		graph3d.connect("activate", self.on_3d)
+		graphmenu.append(graph2d)
+		graphmenu.append(graph3d)
+		
+		#编辑栏
+		editmenu = gtk.Menu()
+		editm = gtk.MenuItem("编辑(_E)", use_underline = True)
+		editm.set_submenu(editmenu)
+		mb.append(editm)
+		self.ecount = 2
+		
+		#undo
+		self.undoi = gtk.ImageMenuItem(gtk.STOCK_UNDO, agr)
+		key, mod = gtk.accelerator_parse("<Control>U")
+		self.undoi.add_accelerator("activate", agr, key,
+				mod, gtk.ACCEL_VISIBLE)
+		editmenu.append(self.undoi)
+		self.undoi.connect("activate", self.on_undo)
+
+		#redo
+		self.redoi = gtk.ImageMenuItem(gtk.STOCK_REDO, agr)
+		key, mod = gtk.accelerator_parse("<Control>R")
+		self.redoi.add_accelerator("activate", agr, key, 
+				mod, gtk.ACCEL_VISIBLE)
+		editmenu.append(self.redoi)
+		self.redoi.connect("activate", self.on_redo)
+
+		#选项栏
+		setmenu = gtk.Menu()
+		setm = gtk.MenuItem("选项(_O)", use_underline = True)
+		setm.set_submenu(setmenu)
+		mb.append(setm)
+
+		#显示工具栏
+		tool = gtk.CheckMenuItem("显示工具栏")
+		tool.set_active(True)
+		tool.connect("activate", self.on_tool)
+		setmenu.append(tool)
+
+		#显示状态栏
+		stat = gtk.CheckMenuItem("显示状态栏")
+		stat.set_active(True)
+		stat.connect("activate", self.on_status)
+		setmenu.append(stat)
+
+		#帮助
+		helpmenu = gtk.Menu()
+		helpm = gtk.MenuItem("帮助(_H)", use_underline = True)
+		helpm.set_submenu(helpmenu)
+		mb.append(helpm)
+
+		helpxm = gtk.MenuItem("显示帮助")
+		key, mod = gtk.accelerator_parse("<Control>Q")
+		helpxm.add_accelerator("activate", agr, key,
+				mod , gtk.ACCEL_VISIBLE)
+		helpmenu.append(helpxm)
+		helpxm.connect("activate", self.expose)
+
+		#关于
+		abouti = gtk.ImageMenuItem(gtk.STOCK_ABOUT, agr)
+		key, mod = gtk.accelerator_parse("<Control>T")
+		abouti.add_accelerator("activate", agr, key, 
+				mod, gtk.ACCEL_VISIBLE)
+		helpmenu.append(abouti)
+		abouti.connect("activate", self.on_about)
