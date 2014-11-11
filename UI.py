@@ -269,3 +269,245 @@ class App(gtk.Window):
 
 		hbA.pack_end(self.btnAr, False, False, 0)
 		hbA.pack_end(self.btnAl, False, False, 0)
+		#2D显式
+		self.vb2u = gtk.VBox(False, 20)
+
+		#函数定义
+		vbDe = gtk.VBox(False, 10)
+
+		amtDe = gtk.Alignment(0, 0, 0, 0)
+		lalDe = gtk.Label("2D显函数: ")
+		amtDe.add(lalDe)
+		
+		hbDe = gtk.HBox(False, 0)
+		laly = gtk.Label("y = ")
+		self.etyP = gtk.Entry()
+		self.etyP.set_text("sin(x)")
+		self.etyP.connect("activate", self.on_ok2d)
+
+		hbDe.pack_start(laly, False, False, 10)
+		hbDe.pack_start(self.etyP, False, False, 0)
+		
+		vbDe.pack_start(amtDe, False, False, 0)
+		vbDe.pack_start(hbDe, False, False, 0)
+
+		#函数范围
+		vbRg = gtk.VBox(False, 10)
+
+		amtRg = gtk.Alignment(0, 0, 0, 0)
+		lalRg = gtk.Label("绘制范围(x): ")
+		amtRg.add(lalRg)
+
+		hbRg1 = gtk.HBox(False, 0)
+		hbRg2 = gtk.HBox(False, 0)
+		lalM = gtk.Label("最小值: ")
+		lalX = gtk.Label("最大值: ")
+		#self.etyM = gtk.Entry()
+		#self.etyM.set_text("0")
+		#self.etyX = gtk.Entry()
+		#self.etyX.set_text("1")
+		adj = gtk.Adjustment(-3.0, -9999.0, 9999.0, 1.0, 5.0, 0.0)
+		self.etyM = gtk.SpinButton(adj, 0, 0)
+		self.etyM.set_size_request(160, 28)
+		adj = gtk.Adjustment(3.0, -9999.0, 9999.0, 1.0, 5.0, 0.0)
+		self.etyX = gtk.SpinButton(adj, 0, 0)
+		self.etyX.set_size_request(160, 28)
+		hbRg1.pack_start(lalM, False, False, 10)
+		hbRg1.pack_start(self.etyM, False, False, 0)
+		hbRg2.pack_start(lalX, False, False, 10)
+		hbRg2.pack_start(self.etyX, False, False, 0)
+		
+		self.etyM.connect("value-changed", self.on_changeC2d)
+		self.etyX.connect("value-changed", self.on_changeC2d)
+
+		vbRg.pack_start(amtRg, False, False, 0)
+		vbRg.pack_start(hbRg1, False, False, 0)
+		vbRg.pack_start(hbRg2, False, False, 0)
+
+		#附加
+		vbAh = gtk.VBox(False, 0)
+		
+		amtAh = gtk.Alignment(0, 0, 0, 0)
+		lalAh = gtk.Label("附加: ")
+		amtAh.add(lalAh)
+
+		hbMN = gtk.HBox(False, 0)
+		hbFN = gtk.HBox(False, 0)
+		lalMN = gtk.Label("主标题: ")
+		lalFN = gtk.Label("副标题: ")
+		self.etyMN = gtk.Entry()
+		self.etyMN.set_text("三角正弦函数")
+		self.etyFN = gtk.Entry()
+		self.etyFN.set_text("Fangyu He")
+		hbMN.pack_start(lalMN, False, False, 10)
+		hbMN.pack_start(self.etyMN, False, False, 0)
+		hbFN.pack_start(lalFN, False, False, 10)
+		hbFN.pack_start(self.etyFN, False, False, 0)
+
+		vbAh.pack_start(amtAh, False, False, 0)
+		vbAh.pack_start(hbMN, False, False, 5)
+		vbAh.pack_start(hbFN, False, False, 5)
+		
+		#图像设置
+		vbGO = gtk.VBox(False, 0)
+
+		amtGO = gtk.Alignment(0, 0, 0, 0)
+		lalGO = gtk.Label("图像设置: ")
+		amtGO.add(lalGO)
+		
+		hbGO = gtk.HBox(False, 0)
+		lalCr = gtk.Label("颜色:")
+		self.btnCr = gtk.ColorButton(gtk.gdk.Color())
+		self.btnCr.connect("color-set", self.on_changeC2d)
+		
+		hbGO.pack_start(lalCr, False, False, 10)
+		hbGO.pack_start(self.btnCr, False, False, 0)
+		
+		vbGO.pack_start(amtGO, False, False, 0)
+		vbGO.pack_start(hbGO, False, False, 5)
+
+		#执行按钮
+		amto2d = gtk.Alignment(1, 0, 0, 0)
+		ok2d = gtk.Button("确认")
+		ok2d.connect("clicked", self.on_ok2d)
+		amto2d.add(ok2d)
+
+		self.vb2u.pack_start(vbDe, False, False, 0)
+		self.vb2u.pack_start(vbAh, False, False, 5)
+		self.vb2u.pack_start(vbRg, False, False, 5)
+		self.vb2u.pack_start(vbGO, False, False, 5)
+		self.vb2u.pack_start(amto2d, False, False, 5)
+		
+		#2D隐式
+		self.vb2y = gtk.VBox(False, 20)
+
+		#函数定义
+		vbDey = gtk.VBox(False, 10)
+
+		amtDey = gtk.Alignment(0, 0, 0, 0)
+		lalDey = gtk.Label("2D隐函数: ")
+		amtDey.add(lalDey)
+		
+		hbDey = gtk.HBox(False, 0)
+		lalyy = gtk.Label("0 = ")
+		self.etyPy = gtk.Entry()
+		self.etyPy.set_text("x^3+y^3-3*x*y")
+		self.etyPy.connect("activate", self.on_ok2y)
+		hbDey.pack_start(lalyy, False, False, 10)
+		hbDey.pack_start(self.etyPy, False, False, 0)
+		
+		vbDey.pack_start(amtDey, False, False, 0)
+		vbDey.pack_start(hbDey, False, False, 0)
+
+		#函数范围
+		vbRgy = gtk.VBox(False, 10)
+
+		amtRgy = gtk.Alignment(0, 0, 0, 0)
+		lalRgy = gtk.Label("绘制范围: ")
+		amtRgy.add(lalRgy)
+
+		hbRg1y = gtk.HBox(False, 0)
+		hbRg2y = gtk.HBox(False, 0)
+		hbRg1yy = gtk.HBox(False, 0)
+		hbRg2yy = gtk.HBox(False, 0)
+		lalMy = gtk.Label("x 范围: ")
+		lalXy = gtk.Label(" ~ ")
+		#self.etyMy = gtk.Entry()
+		#self.etyMy.set_text("-2")
+		
+		adj = gtk.Adjustment(-2.0, -9999.0, 9999.0, 1.0, 5.0, 0.0)
+		self.etyMy = gtk.SpinButton(adj, 0, 0)
+		self.etyMy.set_size_request(55,28)
+		#self.etyXy = gtk.Entry()
+		#self.etyXy.set_text("2")
+		adj = gtk.Adjustment(2.0, -9999.0, 9999.0, 1.0, 5.0, 0.0)
+		self.etyXy = gtk.SpinButton(adj, 0, 0)
+		self.etyXy.set_size_request(55, 28)
+		lalMyy = gtk.Label("y 范围: ")
+		lalXyy = gtk.Label(" ~ ")
+		#self.etyMyy = gtk.Entry()
+		#self.etyMyy.set_text("-2")
+		adj = gtk.Adjustment(-2.0, -9999.0, 9999.0, 1.0, 5.0, 0.0)
+		self.etyMyy = gtk.SpinButton(adj, 0, 0)
+		self.etyMyy.set_size_request(55, 28)
+		#self.etyXyy = gtk.Entry()
+		#self.etyXyy.set_text("2")
+		adj = gtk.Adjustment(2.0, -9999.0, 9999.0, 1.0, 5.0, 0.0)
+		self.etyXyy = gtk.SpinButton(adj, 0, 0)
+		self.etyXyy.set_size_request(55, 28)
+
+		self.etyMy.connect("value-changed", self.on_changeC2y)
+		self.etyXy.connect("value-changed", self.on_changeC2y)
+		self.etyMyy.connect("value-changed", self.on_changeC2y)
+		self.etyXyy.connect("value-changed", self.on_changeC2y)
+
+		hbRg1y.pack_start(lalMy, False, False, 10)
+		hbRg1y.pack_start(self.etyMy, False, False, 0)
+		hbRg1y.pack_start(lalXy, False, False, 10)
+		hbRg1y.pack_start(self.etyXy, False, False, 0)
+		hbRg2y.pack_start(lalMyy, False, False, 10)
+		hbRg2y.pack_start(self.etyMyy, False, False, 0)
+		hbRg2y.pack_start(lalXyy, False, False, 10)
+		hbRg2y.pack_start(self.etyXyy, False, False, 0)
+		
+		
+		vbRgy.pack_start(amtRgy, False, False, 0)
+		vbRgy.pack_start(hbRg1y, False, False, 0)
+		vbRgy.pack_start(hbRg2y, False, False, 0)
+		#vbRgy.pack_start(hbRg1yy, False, False, 0)
+		#vbRgy.pack_start(hbRg2yy, False, False, 0)
+
+		#附加
+		vbAhy = gtk.VBox(False, 0)
+		
+		amtAhy = gtk.Alignment(0, 0, 0, 0)
+		lalAhy = gtk.Label("附加: ")
+		amtAhy.add(lalAhy)
+
+		hbMNy = gtk.HBox(False, 0)
+		hbFNy = gtk.HBox(False, 0)
+		lalMNy = gtk.Label("主标题: ")
+		lalFNy = gtk.Label("副标题: ")
+		self.etyMNy = gtk.Entry()
+		self.etyMNy.set_text("笛卡尔叶形线")
+		self.etyFNy = gtk.Entry()
+		self.etyFNy.set_text("Fangyu He")
+		hbMNy.pack_start(lalMNy, False, False, 10)
+		hbMNy.pack_start(self.etyMNy, False, False, 0)
+		hbFNy.pack_start(lalFNy, False, False, 10)
+		hbFNy.pack_start(self.etyFNy, False, False, 0)
+
+		vbAhy.pack_start(amtAhy, False, False, 0)
+		vbAhy.pack_start(hbMNy, False, False, 5)
+		vbAhy.pack_start(hbFNy, False, False, 5)
+		
+		#图像设置
+		vbGOy = gtk.VBox(False, 0)
+
+		amtGOy = gtk.Alignment(0, 0, 0, 0)
+		lalGOy = gtk.Label("图像设置: ")
+		amtGOy.add(lalGOy)
+		
+		hbGOy = gtk.HBox(False, 0)
+		lalCry = gtk.Label("颜色:")
+		self.btnCry = gtk.ColorButton(gtk.gdk.Color())
+		self.btnCry.connect("color-set", self.on_changeC2y)
+		
+		hbGOy.pack_start(lalCry, False, False, 10)
+		hbGOy.pack_start(self.btnCry, False, False, 0)
+		
+		vbGOy.pack_start(amtGOy, False, False, 0)
+		vbGOy.pack_start(hbGOy, False, False, 5)
+
+		#执行按钮
+		amto2dy = gtk.Alignment(1, 0, 0, 0)
+		ok2y = gtk.Button("确认")
+		ok2y.connect("clicked", self.on_ok2y)
+		amto2dy.add(ok2y)
+		
+		self.vb2y.pack_start(vbDey, False, False, 0)
+		self.vb2y.pack_start(vbAhy, False, False, 5)
+		self.vb2y.pack_start(vbRgy, False, False, 5)
+		self.vb2y.pack_start(vbGOy, False, False, 5)
+		self.vb2y.pack_start(amto2dy,False, False, 0 )
+		
