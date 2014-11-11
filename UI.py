@@ -510,4 +510,271 @@ class App(gtk.Window):
 		self.vb2y.pack_start(vbRgy, False, False, 5)
 		self.vb2y.pack_start(vbGOy, False, False, 5)
 		self.vb2y.pack_start(amto2dy,False, False, 0 )
+		#3D
+		self.vb23 = gtk.VBox(False, 20)
+
+		#函数定义
+		vbDe3 = gtk.VBox(False, 10)
+
+		amtDe3 = gtk.Alignment(0, 0, 0, 0)
+		lalDe3 = gtk.Label("3D函数: ")
+		amtDe3.add(lalDe3)
 		
+		hbDe3 = gtk.HBox(False, 0)
+		laly3 = gtk.Label("z = ")
+		self.etyP3 = gtk.Entry()
+		
+		self.etyP3.set_text("x*cos(2*pi*x)+sin(2*pi*y/3)")
+		self.etyP3.connect("activate", self.on_ok23)
+		#self.etyP3.connect("preedit-changed", self.change_fun3)
+		hbDe3.pack_start(laly3, False, False, 10)
+		hbDe3.pack_start(self.etyP3, False, False, 0)
+		
+		vbDe3.pack_start(amtDe3, False, False, 0)
+		vbDe3.pack_start(hbDe3, False, False, 0)
+
+		#函数范围
+		vbRg3 = gtk.VBox(False, 10)
+
+		amtRg3 = gtk.Alignment(0, 0, 0, 0)
+		lalRg3 = gtk.Label("绘制范围: ")
+		amtRg3.add(lalRg3)
+
+		hbRg13 = gtk.HBox(False, 0)
+		hbRg23 = gtk.HBox(False, 0)
+		hbRg1y3 = gtk.HBox(False, 0)
+		hbRg2y3 = gtk.HBox(False, 0)
+
+		lalM3 = gtk.Label("x 范围: ")
+		lalX3 = gtk.Label(" ~ ")
+		#self.etyM3 = gtk.Entry()
+		adj = gtk.Adjustment(0.0, -9999.0, 9999.0, 1.0, 5.0, 0.0)
+		self.etyM3 = gtk.SpinButton(adj, 0, 0)
+		#self.etyM3.set_text("0")
+		self.etyM3.set_size_request(55,28)
+		#self.etyX3 = gtk.Entry()
+		#self.etyX3.set_text("1")
+		adj = gtk.Adjustment(1.0, -9999.0, 9999.0, 1.0, 5.0, 0.0)
+		self.etyX3 = gtk.SpinButton(adj, 0, 0)
+		self.etyX3.set_size_request(55, 28)
+		lalMy3 = gtk.Label("y 范围: ")
+		lalXy3 = gtk.Label(" ~ ")
+		adj = gtk.Adjustment(0.0, -9999.0, 9999.0, 1.0, 5.0, 0.0)
+		self.etyMy3 = gtk.SpinButton(adj, 0, 0)
+		#self.etyMy3 = gtk.Entry()
+		#self.etyMy3.set_text("0")
+		self.etyMy3.set_size_request(55, 28)
+		adj = gtk.Adjustment(1.0, -9999.0, 9999.0, 1.0, 5.0, 0.0)
+		self.etyXy3 = gtk.SpinButton(adj, 0, 0)
+		#self.etyXy3 = gtk.Entry()
+		#self.etyXy3.set_text("1")
+		self.etyXy3.set_size_request(55, 28)
+
+		self.etyM3.connect("value-changed", self.on_changeC3)
+		self.etyX3.connect("value-changed", self.on_changeC3)
+		self.etyMy3.connect("value-changed", self.on_changeC3)
+		self.etyXy3.connect("value-changed", self.on_changeC3)
+
+		hbRg13.pack_start(lalM3, False, False, 10)
+		hbRg13.pack_start(self.etyM3, False, False, 0)
+		hbRg13.pack_start(lalX3, False, False, 10)
+		hbRg13.pack_start(self.etyX3, False, False, 0)
+		hbRg23.pack_start(lalMy3, False, False, 10)
+		hbRg23.pack_start(self.etyMy3, False, False, 0)
+		hbRg23.pack_start(lalXy3, False, False, 10)
+		hbRg23.pack_start(self.etyXy3, False, False, 0)
+		
+		
+		vbRg3.pack_start(amtRg3, False, False, 0)
+		vbRg3.pack_start(hbRg13, False, False, 0)
+		vbRg3.pack_start(hbRg23, False, False, 0)
+		#vbRgy.pack_start(hbRg1yy, False, False, 0)
+		#vbRgy.pack_start(hbRg2yy, False, False, 0)
+
+		#附加
+		vbAh3 = gtk.VBox(False, 0)
+		
+		amtAh3 = gtk.Alignment(0, 0, 0, 0)
+		lalAh3 = gtk.Label("附加: ")
+		amtAh3.add(lalAh3)
+
+		hbMN3 = gtk.HBox(False, 0)
+		hbFN3 = gtk.HBox(False, 0)
+		lalMN3 = gtk.Label("主标题: ")
+		lalFN3 = gtk.Label("副标题: ")
+		self.etyMN3 = gtk.Entry()
+		self.etyMN3.set_text("3D Demo")
+		self.etyFN3 = gtk.Entry()
+		self.etyFN3.set_text("Fangyu He")
+		hbMN3.pack_start(lalMN3, False, False, 10)
+		hbMN3.pack_start(self.etyMN3, False, False, 0)
+		hbFN3.pack_start(lalFN3, False, False, 10)
+		hbFN3.pack_start(self.etyFN3, False, False, 0)
+
+		vbAh3.pack_start(amtAh3, False, False, 0)
+		vbAh3.pack_start(hbMN3, False, False, 5)
+		vbAh3.pack_start(hbFN3, False, False, 5)
+		
+		#图像设置
+		vbGO3 = gtk.VBox(False, 0)
+
+		amtGO3 = gtk.Alignment(0, 0, 0, 0)
+		lalGO3 = gtk.Label("图像设置: ")
+		amtGO3.add(lalGO3)
+		
+		hbGO3 = gtk.HBox(False, 0)
+		lalCr3 = gtk.Label("颜色:")
+		self.btnCr3 = gtk.ColorButton(gtk.gdk.Color(54648, 56558,15111))
+		self.btnCr3.connect("color-set", self.on_changeC3)
+
+		self.cobb = gtk.combo_box_new_text()
+		self.cobb.append_text('默认图形')
+		self.cobb.append_text('3D图形2')
+		self.cobb.append_text('等高线图')
+		self.cobb.set_active(0)
+		self.cobb.connect('changed', self.change_cb)	
+
+		hbGO3.pack_start(lalCr3, False, False, 10)
+		hbGO3.pack_start(self.btnCr3, False, False, 0)
+		hbGO3.pack_end(self.cobb, False, False, 0)
+		
+		vbGO3.pack_start(amtGO3, False, False, 0)
+		vbGO3.pack_start(hbGO3, False, False, 5)
+
+		#执行按钮
+		amto2d3 = gtk.Alignment(1, 0, 0, 0)
+		ok23 = gtk.Button("确认")
+		ok23.connect("clicked", self.on_ok23)
+		amto2d3.add(ok23)
+
+		frame3d = gtk.Frame()
+		frame3d.set_label("选项")
+		frame3d.set_shadow_type(gtk.SHADOW_ETCHED_OUT)
+		
+		#vbRG = gtk.VBox(False, 20)
+		#vbRG.set_border_width(5)
+		#vbRG.pack_start(vbRg3, False, False, 5)
+		#vbRG.pack_start(vbGO3, False, False, 5)
+
+		#frame3d.add(vbRG)
+
+		self.vb23.pack_start(vbDe3, False, False, 0)
+		self.vb23.pack_start(vbAh3, False, False, 5)
+		self.vb23.pack_start(vbRg3, False, False, 5)
+		self.vb23.pack_start(vbGO3, False, False, 5)
+		#self.vb23.pack_start(frame3d,False, False, 5 )
+		self.vb23.pack_start(amto2d3,False, False, 0 )
+		
+
+		#图像设定容器
+		self.vbtu.pack_start(hbA, False, False, 5)
+		self.vbtu.pack_start(self.vb2u, False, False, 0)	
+
+		#容器
+		self.vb = gtk.VBox(False, 0)
+		self.hb = gtk.HBox(False, 0)
+		self.hb.pack_start(self.vbtu, False, False, 10)
+		self.hb.pack_end(self.image, False, False, 8)
+		self.vb.pack_start(mb, False, False, 0)
+		self.vb.pack_start(self.toolbar, False, False, 0)
+		self.vb.pack_start(self.hb, True, True, 0)
+		self.vb.pack_start(self.statusbar, False, False, 0)
+
+		#print self.vbtu.get_allocation()
+		
+		self.add(self.vb)
+
+		self.connect("delete-event", self.windestroy)
+		self.show_all()
+
+		gtk.main()
+
+	def on_new(self, widget):
+
+		App()
+
+	def on_open(self, widget):
+
+		dialog = gtk.FileChooserDialog("",
+									   None,
+									   gtk.FILE_CHOOSER_ACTION_OPEN,
+									   (gtk.STOCK_CANCEL, gtk.RESPONSE_CANCEL,
+										gtk.STOCK_OPEN, gtk.RESPONSE_OK))
+		dialog.set_default_response(gtk.RESPONSE_OK)
+
+		filter = gtk.FileFilter()
+		filter.set_name("Images")
+		filter.add_mime_type("image/png")
+		filter.add_mime_type("image/jpeg")
+		filter.add_mime_type("image/gif")
+		filter.add_pattern("*.png")
+		filter.add_pattern("*.jpg")
+		filter.add_pattern("*.gif")
+		filter.add_pattern("*.tif")
+		filter.add_pattern("*.xpm")
+		dialog.add_filter(filter)
+
+		filter = gtk.FileFilter()
+		filter.set_name("All files")
+		filter.add_pattern("*")
+		dialog.add_filter(filter)
+
+		response = dialog.run()
+		if response == gtk.RESPONSE_OK:
+			print dialog.get_filename(), 'selected'
+		elif response == gtk.RESPONSE_CANCEL:
+			print 'Closed, no files selected'
+		dialog.destroy()
+	
+	def on_save(self, widget):
+
+		dialog = gtk.FileChooserDialog("",
+									   None,
+									   gtk.FILE_CHOOSER_ACTION_SAVE,
+									   (gtk.STOCK_CANCEL, gtk.RESPONSE_CANCEL,
+										gtk.STOCK_SAVE, gtk.RESPONSE_OK))
+		dialog.set_default_response(gtk.RESPONSE_OK)
+		dialog.set_current_name("funcplot" + str(App.count))
+
+		#filter = gtk.FileFilter()
+		#filter.set_name("All files")
+		#filter.add_pattern("*")
+		#dialog.add_filter(filter)
+
+		#filter = gtk.FileFilter()
+		#filter.set_name("Images")
+		#filter.add_mime_type("image/png")
+		#filter.add_mime_type("image/jpeg")
+		#filter.add_mime_type("image/gif")
+		#filter.add_pattern("*.png")
+		#filter.add_pattern("*.jpg")
+		#filter.add_pattern("*.gif")
+		#filter.add_pattern("*.tif")
+		#filter.add_pattern("*.xpm")
+		#dialog.add_filter(filter)
+		
+		for bb in self.vbtu.get_children():
+			if bb == self.vb2u and self.d2d == 1:
+				file = open(self.filen + "/buf/bu2d.png", "r")
+			if bb == self.vb2y and self.d2y == 1:
+				file = open(self.filen + "/buf/2ybu.png", "r")
+			if bb == self.vb23 and self.d3 == 1:
+				file = open(self.filen + "/buf/bu3d.png", "r")
+			else:
+				file = open(self.filen + "/buf/file.png", "r")
+
+		savef = file.readlines()
+		file.close()
+
+
+		response = dialog.run()
+		if response == gtk.RESPONSE_OK:
+			savefile = open(dialog.get_filename() + ".png", "w")
+			savefile.writelines(savef)
+			if self.flag == 1:
+				gtk.main_quit()
+		elif response == gtk.RESPONSE_CANCEL and self.flag == 1:
+			gtk.main_quit()
+			
+		dialog.destroy()
+
