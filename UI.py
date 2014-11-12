@@ -3,9 +3,9 @@
 
 # 
 #
-# Author: Cao Yang
-# mail: 1054490383@qq.com
-# Created Time: Sat 25 Oct 2014 03:50:50 PM 
+# Author: Baodi&Caoyang
+# Mail: 1054490383@qq.com
+# Created Time: Thursday 16 Oct. 2014 14:50:50 PM CST
 
 import os
 import copy
@@ -183,6 +183,7 @@ class App(gtk.Window):
 				mod, gtk.ACCEL_VISIBLE)
 		helpmenu.append(abouti)
 		abouti.connect("activate", self.on_about)
+
 		#工具栏
 		self.toolbar = gtk.Toolbar()
 		self.toolbar.set_style(gtk.TOOLBAR_ICONS)
@@ -269,6 +270,7 @@ class App(gtk.Window):
 
 		hbA.pack_end(self.btnAr, False, False, 0)
 		hbA.pack_end(self.btnAl, False, False, 0)
+		
 		#2D显式
 		self.vb2u = gtk.VBox(False, 20)
 
@@ -338,7 +340,7 @@ class App(gtk.Window):
 		self.etyMN = gtk.Entry()
 		self.etyMN.set_text("三角正弦函数")
 		self.etyFN = gtk.Entry()
-		self.etyFN.set_text("Fangyu He")
+		self.etyFN.set_text("Baodi&Caoyang")
 		hbMN.pack_start(lalMN, False, False, 10)
 		hbMN.pack_start(self.etyMN, False, False, 0)
 		hbFN.pack_start(lalFN, False, False, 10)
@@ -471,7 +473,7 @@ class App(gtk.Window):
 		self.etyMNy = gtk.Entry()
 		self.etyMNy.set_text("笛卡尔叶形线")
 		self.etyFNy = gtk.Entry()
-		self.etyFNy.set_text("Fangyu He")
+		self.etyFNy.set_text("Baodi&Caoyang")
 		hbMNy.pack_start(lalMNy, False, False, 10)
 		hbMNy.pack_start(self.etyMNy, False, False, 0)
 		hbFNy.pack_start(lalFNy, False, False, 10)
@@ -510,6 +512,7 @@ class App(gtk.Window):
 		self.vb2y.pack_start(vbRgy, False, False, 5)
 		self.vb2y.pack_start(vbGOy, False, False, 5)
 		self.vb2y.pack_start(amto2dy,False, False, 0 )
+		
 		#3D
 		self.vb23 = gtk.VBox(False, 20)
 
@@ -605,7 +608,7 @@ class App(gtk.Window):
 		self.etyMN3 = gtk.Entry()
 		self.etyMN3.set_text("3D Demo")
 		self.etyFN3 = gtk.Entry()
-		self.etyFN3.set_text("Fangyu He")
+		self.etyFN3.set_text("Baodi&Caoyang")
 		hbMN3.pack_start(lalMN3, False, False, 10)
 		hbMN3.pack_start(self.etyMN3, False, False, 0)
 		hbFN3.pack_start(lalFN3, False, False, 10)
@@ -778,3 +781,238 @@ class App(gtk.Window):
 			
 		dialog.destroy()
 
+	#2d显制图
+	def on_2d(self, widget):
+
+		flag = 0
+		for bb in self.vbtu.get_children():
+			if bb == self.vb2y:
+				self.vbtu.remove(self.vb2y)
+			if bb == self.vb23:
+				self.vbtu.remove(self.vb23)
+			if bb == self.vb2u:
+				flag = 1
+
+		if flag == 0:
+			self.vbtu.pack_start(self.vb2u, False, False, 0)
+
+
+	def on_2y(self, widget):
+
+		flag = 0
+		for bb in self.vbtu.get_children():
+			if bb == self.vb2u:
+				self.vbtu.remove(self.vb2u)
+			if bb == self.vb23:
+				self.vbtu.remove(self.vb23)
+			if bb == self.vb2y:
+				flag = 1
+
+		if flag == 0:
+			self.vbtu.pack_start(self.vb2y, False, False, 0)
+			self.show_all()
+	
+	def on_3d(self, widget):
+
+		flag = 0
+		for bb in self.vbtu.get_children():
+			if bb == self.vb2u:
+				self.vbtu.remove(self.vb2u)
+			if bb == self.vb2y:
+				self.vbtu.remove(self.vb2y)
+			if bb == self.vb23:
+				flag = 1
+
+		if flag == 0:
+			self.vbtu.pack_start(self.vb23, False, False, 0)
+			self.show_all()
+
+	def on_undo(self, widget):
+
+		self.ecount = self.ecount - 1
+		self.redoi.set_sensitive(True)
+		self.redotb.set_sensitive(True)
+		
+		if self.ecount <= 0:
+			self.undoi.set_sensitive(False)
+			self.undotb.set_sensitive(False)
+			self.redoi.set_sensitive(True)
+			self.redotb.set_sensitive(True)
+
+	def on_redo(self, widget):
+
+		self.ecount = self.ecount +1
+		self.undoi.set_sensitive(True)
+		self.undotb.set_sensitive(True)
+
+		if self.ecount >=5:
+			self.undoi.set_sensitive(True)
+			self.undotb.set_sensitive(True)
+			self.redoi.set_sensitive(False)
+			self.redotb.set_sensitive(False)
+	
+	def on_tool(self, widget):
+
+		if widget.active:
+			self.toolbar.show()
+		else:
+			self.toolbar.hide()
+
+	def on_status(self, widget):
+
+		if widget.active:
+			self.statusbar.show()
+		else:
+			self.statusbar.hide()
+
+	def on_about(self, widget):
+
+		about = gtk.AboutDialog()
+		about.set_program_name("Funcplot")
+		about.set_version("0.1")
+		about.set_copyright("""Baodi&Caoyang
+1054490383@qq.com""")
+		about.set_comments("Funcplot是一个函数制图软件")
+		about.run()
+		about.destroy()
+
+	def expose(self,widget):
+		label = gtk.Label("""              请注意！\n
+		1、本产品支持三角、反三角函数，对数函数，幂指函数。\n
+		2、绘图范围旁边的旋转按钮点击改变范围后函数可以动态生成图像。\n
+		3、改变参数值后按回车可以自动执行。\n
+		4、2D显示作图中未知数只识别x。\n
+		5、2D隐式作图和3D作图中未知数只识别x,y。\n
+		6、3D作图有默认图形，3D图形和等高线图三种格式。\n
+		7、点击旋转按钮改变绘图范围会有不一样的效果。\n
+		8、乘法和除法必须用符号*和/。\n
+		9、ln用log代替,其他对数函数格式为logN(x)(其中N为常数)。\n
+		10、反三角函数的格式为：asin(x),acos(x),atan(x)。\n
+		11、圆周率用pi表示。\n
+		12、正负号可以直接识别，正数前面的+号可以不省略。\n""")
+		label.set_justify(gtk.JUSTIFY_LEFT)
+		#label.set_line_wrap(True)
+		dialog = gtk.Dialog("帮助",None,0,None)
+		dialog.vbox.pack_start(label)
+		label.show()
+		response = dialog.run()
+		dialog.destroy()
+
+	def on_ar(self, widget):
+
+		self.btnAr.set_sensitive(False)
+		self.btnAl.set_sensitive(True)
+
+		self.hb.remove(self.vbtu)
+		self.hb.remove(self.image)
+		self.hb.pack_start(self.image, False, False, 8)
+		self.hb.pack_end(self.vbtu, False, False, 10)
+	
+	def on_al(self, widget):
+
+		self.btnAr.set_sensitive(True)
+		self.btnAl.set_sensitive(False)
+
+		self.hb.remove(self.vbtu)
+		self.hb.remove(self.image)
+		self.hb.pack_start(self.vbtu, False, False, 10)
+		self.hb.pack_end(self.image, False, False, 8)
+
+	def on_changeC2d(self, widget):
+
+		self.d2d_L += [self.etyP.get_text()]
+
+		if self.d2d == 1:
+			if self.d2d_L[-1] != self.d2d_L[-2]:
+				self.d2d = 0
+			else:
+				self.on_ok2d((self, widget))
+
+	def on_changeC2y(self, widget):
+
+		self.d2y_L += [self.etyPy.get_text()]
+
+		if self.d2y == 1:
+			if self.d2y_L[-1] != self.d2y_L[-2]:
+				self.d2y = 0
+			else:
+				self.on_ok2y((self, widget))
+
+	def on_changeC3(self, widget):
+
+		self.d3_L += [self.etyP3.get_text()]
+
+		if self.d3 == 1:
+			if self.d3_L[-1] != self.d3_L[-2]:
+				self.d3 = 0
+			else:
+				self.on_ok23((self, widget))
+	
+	def change_cb(self, widget):
+
+		self.d3_L += [self.etyP3.get_text()]
+		
+		if self.d3 == 1:
+			if self.d3_L[-1] != self.d3_L[-2]:
+				self.d3 = 0
+			else:
+				self.on_ok23((self, widget))
+
+	def windestroy(self, widget, event):
+
+		App.count = App.count - 1
+		
+		for bb in self.vbtu.get_children():
+			if (bb == self.vb2u and self.d2d == 1) or (bb == self.vb2y and self.d2y == 1) or (bb == self.vb23 and self.d3 == 1):
+				self.mk = gtk.MessageDialog(self, 
+					gtk.DIALOG_MODAL, gtk.MESSAGE_QUESTION,
+					 message_format="是否保存图片？")
+				cancel_button = gtk.Button("不保存")
+				dao_button  = gtk.Button("保存")
+				self.mk.action_area.pack_start(cancel_button)
+				self.mk.action_area.pack_start(dao_button)
+				cancel_button.show_all()
+				dao_button.show_all()
+				dao_button.connect("clicked", self.on_savei)
+				cancel_button.connect("clicked", self.on_cancel)
+				self.mk.run()
+			else:
+				gtk.main_quit()
+
+	def on_savei(self, widget):
+		self.flag = 1
+		self.on_save((self, widget))
+		self.mk.destroy()
+
+	def on_cancel(self, widget):
+		self.mk.destroy()
+		gtk.main_quit()
+
+	def windestroy1(self, widget):
+
+		App.count = App.count - 1
+
+		self.mk = gtk.MessageDialog(self, 
+				gtk.DIALOG_MODAL, gtk.MESSAGE_QUESTION,
+				 message_format="是否保存图片？")
+		cancel_button = gtk.Button("不保存")
+		dao_button  = gtk.Button("保存")
+		self.mk.action_area.pack_start(cancel_button)
+		self.mk.action_area.pack_start(dao_button)
+		cancel_button.show_all()
+		dao_button.show_all()
+		dao_button.connect("clicked", self.on_savei)
+		cancel_button.connect("clicked", self.on_cancel)
+		self.mk.run()
+
+	#def on_size(self, widget, allocation):
+		#print allocation.width, allocation.height
+		#self.ff += [(allocation.width, allocation.height)]
+		#if self.ff[-1] == self.ff[-2]:
+		#	[ww, hh] = [copy.deepcopy(self.ww), copy.deepcopy(self.hh)]
+		#	self.ww = allocation.width-269
+		#	self.hh = allocation.height-76
+		#if self.d3 == 1 and [ww, hh] != [self.ww, self.hh]:
+		#	self.on_ok23((self, widget))
+
+App()
