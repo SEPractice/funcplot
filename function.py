@@ -4,7 +4,16 @@
 # mail: 771385600@qq.com
 # Created Time: Sat 1 Nov 2014 13:14:14 PM 
 
+import os
+import copy
+import cairo
+import gtk
+import sys
+import rpy2.robjects as ro
+import rpy2.rinterface as ri
+from rpy2.robjects.packages import importr
 
+def __init__(self):
 
 def on_ok2d(self, widget):
 
