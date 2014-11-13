@@ -1,9 +1,5 @@
-funcplot
-========
-
-二维&amp;三维制图软件（基于python）
-1  致阅者语
-       这是一个数学函数制图的专业软件，我们的idea来自于window下的winplot软件，它能完成各种函数的绘制功能。在linux中，已有函数制图软件有Grace和kmplot等，其中kmplot制作相对全面、美观一些，但都只能支持2D的函数制图。我们制作的这个软件，已经能支持3D函数作图，而且支持3种不同的3D模式。
+1  致使用者语
+      这是一个数学函数制图的专业软件，我们的idea来自于window下的winplot软件，它能完成各种函数的绘制功能。在linux中，已有函数制图软件有Grace和kmplot等，其中kmplot制作相对全面、美观一些，但都只能支持2D的函数制图。我们制作的这个软件，已经能支持3D函数作图，而且支持3种不同的3D模式。
    
    你们的认同是我们最大的欣慰。^_^
 
@@ -21,7 +17,7 @@ funcplot
 安装R	sudo apt-get install r-base r-base-dev
 终端打开	R
        R中输入	install.packages("emdbook")
-       选择相应镜像路径安装好emdbook包即可（若安装不成功，请参照一些说明中的第二条）
+       选择相应镜像路径安装好emdbook包即可（若安装不成功，导致软件运行错误，请参照3 一些说明中的第2条）
 安装rpy2	sudo apt-get install python-rpy2
 
 
@@ -50,7 +46,7 @@ funcplot
 
 
 
-BD&CY  有问题请联系QQ：771385600 或者 1054490383（2014.11.13）
+Author:BD&CY  有问题请联系QQ：771385600 或者 1054490383（2014.11.13）
 
 
 
