@@ -1,11 +1,6 @@
-#!/usr/bin/python
-# -*- coding: utf-8 -*-
-
-# 
-#
-# Author: Baodi&Caoyang
+# Author: Caoyang
 # Mail: 1054490383@qq.com
-# Created Time: Thursday 16 Oct. 2014 14:50:50 PM CST
+# Created Time:  Wed 24 Oct 2014 09:20 AM 
 
 import os
 import copy
