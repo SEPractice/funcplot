@@ -13,7 +13,27 @@ import rpy2.robjects as ro
 import rpy2.rinterface as ri
 from rpy2.robjects.packages import importr
 
+
 def __init__(self):
+		super(App, self).__init__()
+		
+		App.count = App.count + 1 
+		self.d3 = 0
+		self.d2d = 0
+		self.d2y = 0
+		self.d3_L = []
+		self.d2d_L = []
+		self.d2y_L = []
+		self.flag =0
+		self.filen = str(os.path.abspath(__file__))[:len(str(os.path.abspath(__file__)))-6]
+		#self.ff = [(781, 588)]
+		self.set_position(gtk.WIN_POS_CENTER)
+		self.set_title("FuncPlot"+str(App.count))
+		#self.modify_bg(gtk.gdk.Color(65535, 65535, 65535))
+		#self.ww = 781
+		#self.hh = 588
+		self.resize(781, 588)
+		#self.connect("size-allocate", self.on_size)
 
 def on_ok2d(self, widget):
 
