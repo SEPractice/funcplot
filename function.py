@@ -39,12 +39,12 @@ class App(gtk.Window):
         self.resize(781, 588)
         #self.connect("size-allocate", self.on_size)
 		
-		#菜单栏
-		mb = gtk.MenuBar()
-		filemenu = gtk.Menu()
-		filem = gtk.MenuItem("文件(_F)", use_underline = True)
-		filem.set_submenu(filemenu)
-		mb.append(filem)
+	#菜单栏
+        mb = gtk.MenuBar()
+        filemenu = gtk.Menu()
+        filem = gtk.MenuItem("文件(_F)", use_underline = True)
+        filem.set_submenu(filemenu)
+        mb.append(filem)
 		
 		agr = gtk.AccelGroup()
 		self.add_accel_group(agr)
