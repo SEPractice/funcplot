@@ -19,10 +19,10 @@ class App(gtk.Window):
 	count = 0
 	
 	def __init__(self):
-		super(App, self).__init__()
-		
-		App.count = App.count + 1 
-		self.d3 = 0
+        super(App, self).__init__()
+        
+        App.count = App.count + 1 
+        self.d3 = 0
 		self.d2d = 0
 		self.d2y = 0
 		self.d3_L = []
